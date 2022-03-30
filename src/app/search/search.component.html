@@ -1,29 +1,59 @@
-<input placeholder="search for Star Wars character" (keydown.enter)="lookup($event)">
+<div class="input-group mb-3">
+  <input type="text"
+         #name
+         (keydown.enter)="lookup($event)"
+         class="form-control"
+         placeholder="Search for Star Wars characters"
+         aria-label="Search for Star Wars characters"
+         aria-describedby="button-addon2">
+  <button class="btn btn-outline-secondary"
+          type="button"
+          id="button-addon2"
+          (click)="clearLookup()">Clear</button>
+</div>
 
-<ng-container *ngIf="heroes$; else spinner">
-  <table class="table-hover table-striped" border="1" style="width: 100%">
+<ng-container *ngIf="(people$ | async) as people; else spinner">
+  <table class="table table-striped">
     <thead>
     <tr>
-      <th>name</th>
-      <th>height</th>
-      <th>weight</th>
+      <th scope="col" class="w-50">Name</th>
+      <th scope="col" class="w-25">Height</th>
+      <th scope="col" class="w-25">Weight</th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let camper of heroes$.results">
-      <td>{{camper.name}}</td>
-      <td>{{camper.height}}</td>
-      <td>{{camper.mass}}</td>
+    <tr *ngFor="let person of people?.results">
+      <td>{{ person.name }}</td>
+      <td>{{ person.height }}</td>
+      <td>{{ person.mass }}</td>
     </tr>
     </tbody>
   </table>
 
-  <button (click)="previous()" *ngIf="this.heroes$.previous">previous</button>
-  <button (click)="next()" *ngIf="this.heroes$.next">next</button>
+  <div class="row">
+    <div class="col-6">
+      <button type="button"
+              class="btn btn-primary"
+              (click)="previous(people?.previous)"
+              *ngIf="people?.previous">Previous
+      </button>
+    </div>
+    <div class="col-6 text-right">
+      <button type="button"
+              class="btn btn-primary float-end"
+              (click)="next(people?.next)"
+              *ngIf="people?.next">Next
+      </button>
+    </div>
+  </div>
 </ng-container>
 
 <ng-template #spinner>
-  <div>Loading..</div>
+  <div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
 </ng-template>
 
 

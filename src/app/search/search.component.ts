@@ -1,5 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {SearchService} from "./services/search.service";
+import {Observable} from "rxjs";
+import {IPeople} from "./interfaces/people.int";
 
 @Component({
   selector: 'app-search',
@@ -8,7 +10,9 @@ import {SearchService} from "./services/search.service";
 })
 export class SearchComponent implements OnInit {
 
-  heroes$: any;
+  @ViewChild('name') lookupInput: any;
+
+  people$: Observable<IPeople>;
 
   constructor(private searchService: SearchService) {
   }
@@ -17,21 +21,28 @@ export class SearchComponent implements OnInit {
     this.search();
   }
 
-  next(): void {
-    this.search(this.heroes$.next);
+  next(nextUrl: string | undefined): void {
+    if (nextUrl) {
+      this.search(nextUrl);
+    }
   }
 
-  previous(): void {
-    this.search(this.heroes$.previous);
-  }
-
-  search(url?: string): void {
-    this.searchService.searchPeople(url).subscribe(res => {
-      this.heroes$ = res;
-    })
+  previous(previousUrl: string | undefined): void {
+    if (previousUrl) {
+      this.search(previousUrl);
+    }
   }
 
   lookup($event: any) {
     this.search(`https://swapi.dev/api/people/?search=${$event.target.value}`);
+  }
+
+  clearLookup(): void {
+    this.lookupInput.nativeElement.value = '';
+    this.search();
+  }
+
+  private search(url?: string): void {
+    this.people$ = this.searchService.searchPeople(url);
   }
 }
