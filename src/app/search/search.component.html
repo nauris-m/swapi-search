@@ -1,0 +1,29 @@
+<input placeholder="search for Star Wars character" (keydown.enter)="lookup($event)">
+
+<ng-container *ngIf="heroes$; else spinner">
+  <table class="table-hover table-striped" border="1" style="width: 100%">
+    <thead>
+    <tr>
+      <th>name</th>
+      <th>height</th>
+      <th>weight</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let camper of heroes$.results">
+      <td>{{camper.name}}</td>
+      <td>{{camper.height}}</td>
+      <td>{{camper.mass}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <button (click)="previous()" *ngIf="this.heroes$.previous">previous</button>
+  <button (click)="next()" *ngIf="this.heroes$.next">next</button>
+</ng-container>
+
+<ng-template #spinner>
+  <div>Loading..</div>
+</ng-template>
+
+
