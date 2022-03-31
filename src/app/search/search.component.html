@@ -1,7 +1,7 @@
 <div class="input-group mb-3">
   <input type="text"
          #name
-         (keydown.enter)="lookup($event)"
+         (keyup)="lookup($event)"
          class="form-control"
          placeholder="Search for Star Wars characters"
          aria-label="Search for Star Wars characters"

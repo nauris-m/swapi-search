@@ -34,7 +34,7 @@ export class SearchComponent implements OnInit {
   }
 
   lookup($event: any) {
-    this.search(`https://swapi.dev/api/people/?search=${$event.target.value}`);
+    this.people$ = this.searchService.lookupPerson($event.target.value);
   }
 
   clearLookup(): void {
