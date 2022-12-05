@@ -5,6 +5,8 @@ import {SearchComponent} from './search/search.component';
 import {HttpClientModule} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { FileUploadfComponent } from './search/components/file-uploadf/file-uploadf.component';
+import { AttachmentsComponent } from './search/components/attachments/attachments.component';
 
 @NgModule({
   imports: [
@@ -15,7 +17,9 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
   ],
   declarations: [
     AppComponent,
-    SearchComponent
+    SearchComponent,
+    FileUploadfComponent,
+    AttachmentsComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
